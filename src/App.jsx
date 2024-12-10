@@ -37,7 +37,16 @@ const App = () => {
           <button onClick={handleDislike}><span className="material-symbols-outlined">
             thumb_down
           </span>{reactions.dislikes}</button>
-          
+          <br/>
+          <br/>
+          <div>
+            {/* {log.join(', ')} */}
+            <ul>
+            {
+              log.map((reactions, index)=><li key={index}>{reactions}</li>)
+            }
+            </ul>
+          </div>
         </div>
     )
 }
