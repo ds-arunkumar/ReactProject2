@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const App = () => {
 
@@ -25,6 +25,18 @@ const App = () => {
       });
       setLog([...log, 'Dislike'])
     }
+
+    useEffect(()=>{
+      console.log('This will run only once when the component renders for the first time');
+    }, []);
+
+    useEffect(()=>{
+      console.log('This will run when the component renders and for any state changes and all the re-renders');
+    });
+
+    useEffect(()=>{
+      console.log('This will run when the component renders and on every state change of "Like" state')
+    }, [reactions.likes]);
 
 
 
