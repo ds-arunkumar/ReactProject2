@@ -1,66 +1,57 @@
-import { useEffect, useState } from "react";
+import { useReducer } from "react";
+
+const intialState = {
+  count: 0
+};
+
+const reducer = (state, action) => {
+  // if (action.type === 'PLUS') {
+  //   return {
+  //       count: state.count + 1
+  //   }
+  // }else if (action.type==='MINUS') {
+  //   return {
+  //       count: state.count - 1
+  //   }
+  // }else if (action.type === "RESET"){
+  //   return{
+  //     count:0
+  //   }
+  // }
+  // return state;
+
+  switch(action.type){
+    case'PLUS':
+    return{
+      count:state.count+1
+    }
+    case'MINUS':
+    return{
+      count: state.count - 1
+    }
+    case'RESET':
+    return{
+      count:0
+    }
+    default:
+      return state;
+  }
+}
+
+
 
 const App = () => {
-
-    const [reactions, setReactions] = useState({
-      likes: 0,
-      dislikes: 0
-    });
-
-    const [log, setLog]=useState([]);
-    console.log(log);
-
-    const handleLike = ()=> {
-      setReactions({
-        ...reactions, 
-        likes: reactions.likes + 1
-      });
-      setLog([...log, 'Like']);
-    }
-
-    const handleDislike = ()=> {
-      setReactions({
-        ...reactions, 
-        dislikes: reactions.dislikes + 1
-      });
-      setLog([...log, 'Dislike'])
-    }
-
-    useEffect(()=>{
-      console.log('This will run only once when the component renders for the first time');
-    }, []);
-
-    useEffect(()=>{
-      console.log('This will run when the component renders and for any state changes and all the re-renders');
-    });
-
-    useEffect(()=>{
-      console.log('This will run when the component renders and on every state change of "Like" state')
-    }, [reactions.likes]);
-
-
-
-    return (
-        <div>
-          <button onClick={handleLike}><span className="material-symbols-outlined">
-            thumb_up
-          </span>{reactions.likes}</button>
-          &nbsp;&nbsp;&nbsp;
-          <button onClick={handleDislike}><span className="material-symbols-outlined">
-            thumb_down
-          </span>{reactions.dislikes}</button>
-          <br/>
-          <br/>
-          <div>
-            {/* {log.join(', ')} */}
-            <ul>
-            {
-              log.map((reactions, index)=><li key={index}>{reactions}</li>)
-            }
-            </ul>
-          </div>
-        </div>
-    )
+  const [state, dispatch] = useReducer(reducer,  intialState);
+  
+  return (
+      <div>
+          
+          <h1>Count: {state.count}</h1>
+          <button onClick={() => dispatch({ type: "PLUS" })}>Increase</button>
+          <button onClick={()=>dispatch({type:"MINUS"})}>Decrease</button>
+          <button onClick={()=>dispatch({type: "RESET"})}>Reset</button>
+      </div>
+  )
 }
 
 export default App;
