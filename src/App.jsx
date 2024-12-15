@@ -1,49 +1,35 @@
-import { useReducer } from "react";
+import Like from "./components/Like";
+import Dislike from "./components/Dislike";
+import { useCallback, useState } from "react";
 
-const intialState = {
-  count: 0,
-  history:[]
-};
-
-const reducer = (state, action) => {
-  switch(action.type){
-    case'PLUS':
-    return{
-      count:state.count+1,
-      history: [...state.history, 'PLUS']
-    }
-    case'MINUS':
-    return{
-      count: state.count - 1,
-      history: [...state.history, 'MINUS']
-      
-    }
-    case'RESET':
-    return{
-      count:0,
-      history: [...state.history, 'RESET']
-      
-    }
-    default:
-      return state;      
-  }
-}
 const App = () => {
-  const [state, dispatch] = useReducer(reducer,  intialState);
-  
-  
-  return (
-      <div>          
-          <h1>Count: {state.count}</h1>
-          <button onClick={() => dispatch({ type: "PLUS" })}>Increase</button>
-          <button onClick={()=>dispatch({type:"MINUS"})}>Decrease</button>
-          <button onClick={()=>dispatch({type: "RESET"})}>Reset</button>
-          <h2>History</h2>
-            {
-                state.history.join(', ')
-            }
-      </div>
-  )
+  const [likes, setLikes] = useState(0);
+  const [dislikes, setDislikes] = useState(0);
+
+  const onlike =(like)=>{
+    setLikes(like)
+  }
+
+  const onDislike = (dislike)=>{
+    setDislikes(dislike)
+  }
+
+
+
+
+    console.log('Rendering App...');
+
+    return (
+        <div>
+            <h1>Reactions: {likes + dislikes}</h1>
+            <Like 
+            onLike = {onlike}
+            />
+            <Dislike
+            onDislike = {onDislike}
+             />
+        </div>
+    )
 }
 
 export default App;
